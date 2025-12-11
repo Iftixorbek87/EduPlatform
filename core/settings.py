@@ -13,7 +13,7 @@ DEBUG = os.getenv('DEBUG', 'False') == 'True'
 DEBUG = False
 # ALLOWED_HOSTS = ['*']
 # settings.py faylida
-ALLOWED_HOSTS = ['bilimiftixori.uz', 'www.bilimiftixori.uz', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*', 'eduplatform-6nr7.onrender.com', '.onrender.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
