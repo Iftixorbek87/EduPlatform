@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-6xl mx-auto py-12 px-4">
+    <div class="bg-white rounded-3xl shadow-2xl overflow-hidden">
+        {% if course.image %}
+            <img src="{{ course.image.url }}" class="w-full h-96 object-cover" alt="{{ course.title }}">
+        {% else %}
+            <div class="bg-gradient-to-r from-indigo-600 to-purple-700 h-96 flex items-center justify-center">
+                <h1 class="text-white text-5xl font-bold">{{ course.title }}</h1>
+            </div>
+        {% endif %}
+
+        <div class="p-10">
+            <h1 class="text-5xl font-bold mb-6 text-gray-800">{{ course.title }}</h1>
+            <div class="flex flex-wrap gap-6 text-lg mb-8">
+                <div>
+                    <span class="text-gray-600">O‘qituvchi:</span>
+                    <span class="font-bold text-indigo-600 ml-2">
+                        {{ course.teacher.get_full_name|default:course.teacher.username }}
+                    </span>
+                </div>
+                <div class="text-4xl font-bold text-green-600">
+                    {% if course.price == 0 %}BEPUL{% else %}{{ course.price }} so‘m{% endif %}
+                </div>
+            </div>
+
+            <p class="text-xl text-gray-700 leading-relaxed mb-10">{{ course.description }}</p>
+
+            <h2 class="text-3xl font-bold mb-8 text-gray-800">Darslar ro‘yxati</h2>
+            
+            {% for lesson in course.lessons.all %}
+            <div class="bg-gradient-to-r from-gray-50 to-gray-100 p-8 rounded-2xl mb-6 border-l-8 border-indigo-600 hover:shadow-xl transition">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="text-2xl font-bold">{{ forloop.counter }}. {{ lesson.title }}</h3>
+                        <p class="text-gray-600 mt-2">{{ lesson.content|truncatewords:40 }}</p>
+                        {% if lesson.video_url %}
+                            <a href="{{ lesson.video_url }}" target="_blank" class="inline-block mt-4 text-blue-600 font-bold hover:underline">
+                                Video ko‘rish →
+                            </a>
+                        {% endif %}
+                    </div>
+                    <div class="text-5xl text-gray-300">▶</div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="text-center py-20 text-2xl text-gray-500">
+                Hozircha darslar qo‘shilmagan. Tez orada paydo bo‘ladi!
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

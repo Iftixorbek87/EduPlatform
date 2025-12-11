@@ -1,0 +1,18 @@
+<nav class="bg-gradient-to-r from-blue-600 to-purple-700 text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+            <div class="flex items-center">
+                <h1 class="text-2xl font-bold">EduPlatform</h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                {% if user.is_authenticated %}
+                    <a href="/profile/" class="hover:bg-white/20 px-3 py-2 rounded">Profil</a>
+                    <a href="/logout/" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded">Chiqish</a>
+                {% else %}
+                    <a href="/login/" class="hover:bg-white/20 px-3 py-2 rounded">Kirish</a>
+                    <a href="/register/" class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded">Ro'yxatdan o'tish</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>

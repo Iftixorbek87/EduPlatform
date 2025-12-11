@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-4xl mx-auto py-20 text-center">
+    <h1 class="text-5xl font-bold mb-8">{{ course.title }} kursini sotib olish</h1>
+    <p class="text-3xl text-green-600 mb-12">{{ course.price }} so‘m</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-2xl mx-auto">
+        <a href="{% url 'click_prepare' course.id %}" class="bg-blue-600 text-white py-8 rounded-2xl text-2xl hover:scale-105 transition">
+            CLICK orqali to‘lash
+        </a>
+        <a href="{% url 'payme_prepare' course.id %}" class="bg-purple-600 text-white py-8 rounded-2xl text-2xl hover:scale-105 transition">
+            PAYME orqali to‘lash
+        </a>
+        <a href="#" class="bg-green-600 text-white py-8 rounded-2xl text-2xl opacity-50">
+            PAYZE (tez kunda)
+        </a>
+    </div>
+</div>
+{% endblock %}

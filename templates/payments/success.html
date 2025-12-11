@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="text-center py-32">
+    <h1 class="text-6xl font-bold text-green-600 mb-8">To‘lov muvaffaqiyatli!</h1>
+    <p class="text-3xl">Tabriklaymiz! "{{ payment.course.title }}" kursi sizga ochildi</p>
+    <a href="{% url 'course_detail' payment.course.id %}" class="inline-block mt-10 bg-indigo-600 text-white px-12 py-6 rounded-2xl text-2xl hover:bg-indigo-700">
+        Kursga kirish
+    </a>
+</div>
+{% endblock %}
+
