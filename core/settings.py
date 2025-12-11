@@ -10,8 +10,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-change-me')
 
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
-
-ALLOWED_HOSTS = ['*']
+DEBUG = False
+# ALLOWED_HOSTS = ['*']
+# settings.py faylida
+ALLOWED_HOSTS = ['bilimiftixori.uz', 'www.bilimiftixori.uz', 'localhost', '127.0.0.1']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
