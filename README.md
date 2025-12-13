@@ -71,6 +71,7 @@ Backend Developer | Django Enthusiast
 GitHub: @Iftixorbek87
 Telegram: @Iftixorbek_Odilov
 Email: odiloviftixorbek@gmail.com
+Tel : +998943980949
 
-Bu loyiha kurs ishi sifatida boshlangan bo‘lsa-da, hozir real foydalanishga tayyor professional platforma darajasiga yetdi.
+
 Agar loyiha yoqsa – ⭐ Star bosing! Bu menga katta motivatsiya beradi!
