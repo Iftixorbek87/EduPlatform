@@ -2,8 +2,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib.auth.views import LoginView, LogoutView
-from accounts.views import register_view, CustomLoginView
+from django.contrib.auth.views import LogoutView
+from accounts.views import register_view, login_view
 from core.views import home
 from courses.views import course_detail_view
 
@@ -12,11 +12,12 @@ urlpatterns = [
 
     path('', home, name='home'),  # Bosh sahifa
     path('register/', register_view, name='register'),
-    path('login/', CustomLoginView.as_view(), name='login'),
+    path('login/', login_view, name='login'),
+    path('course/', include('courses.urls')),
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
 
     path('course/<int:pk>/', course_detail_view, name='course_detail'),
-    path('payments/', include('payments.urls')),
+    path('payments/', include(('payments.urls', 'payments'), namespace='payment')),
 ]
 
 if settings.DEBUG:

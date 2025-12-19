@@ -1,30 +1,44 @@
+# Python asosiy rasm
 FROM python:3.11-slim
 
-# Environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+# Muhit o'zgaruvchilari
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONHASHSEED=random \
+    PIP_NO_CACHE_DIR=off \
+    PIP_DISABLE_PIP_VERSION_CHECK=on \
+    PIP_DEFAULT_TIMEOUT=100 \
+    POETRY_VERSION=1.6.1
 
-# Set work directory
+# Ishchi katalog
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
+# Tizim paketlarini o'rnatish
+RUN apt-get update && apt-get install --no-install-recommends -y \
     build-essential \
     libpq-dev \
+    gettext \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Python paketlarini o'rnatish
+COPY pyproject.toml poetry.lock* ./
+RUN pip install --upgrade pip && \
+    pip install "poetry==$POETRY_VERSION" && \
+    poetry config virtualenvs.create false && \
+    poetry install --no-interaction --no-ansi
 
-# Copy project
+# Loyiha fayllarini nusxalash
 COPY . .
 
-# Collect static files
-RUN python manage.py collectstatic --noinput
+# Statik fayllarni yig'ish
+RUN python manage.py collectstatic --noinput --clear
 
-# Run migrations
-RUN python manage.py migrate
+# Migratsiyalarni bajarish
+RUN python manage.py migrate --noinput
 
-# Command to run the application
-CMD ["gunicorn", "core.wsgi:application", "--bind", "0.0.0.0:8000"]
+# Portni ochish
+EXPOSE 8000
+
+# Ishga tushirish buyrug'i
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "core.wsgi:application"]

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Course, Lesson, Enrollment, Progress
+from .models import Category, Course, Lesson, Enrollment, LessonProgress
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -7,7 +7,24 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ('title', 'teacher', 'price', 'created_at')
+    list_display = ('title', 'get_teacher', 'price', 'is_premium', 'is_published', 'created_at')
+    list_filter = ('is_premium', 'is_published', 'category', 'created_at')
+    search_fields = ('title', 'description')
+    list_editable = ('is_premium', 'is_published')
+    raw_id_fields = ('teacher',)
+    fieldsets = (
+        ('Asosiy ma\'lumotlar', {
+            'fields': ('title', 'description', 'category', 'teacher', 'image')
+        }),
+        ('Narx va holat', {
+            'fields': ('price', 'is_premium', 'is_published')
+        }),
+    )
+
+    def get_teacher(self, obj):
+        return obj.teacher.get_full_name() if obj.teacher else "-"
+    get_teacher.short_description = 'O\'qituvchi'
+    get_teacher.admin_order_field = 'teacher__first_name'
 
 @admin.register(Lesson)
 class LessonAdmin(admin.ModelAdmin):
@@ -17,6 +34,6 @@ class LessonAdmin(admin.ModelAdmin):
 class EnrollmentAdmin(admin.ModelAdmin):
     list_display = ('student', 'course', 'enrolled_at')
 
-@admin.register(Progress)
+@admin.register(LessonProgress)
 class ProgressAdmin(admin.ModelAdmin):
     list_display = ('enrollment', 'lesson', 'completed_at')

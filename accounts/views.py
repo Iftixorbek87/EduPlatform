@@ -1,9 +1,20 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login
-from django.contrib.auth.views import LoginView
+from django.http import JsonResponse
+from django.contrib.auth import login, authenticate, logout, get_user_model
 from django.contrib import messages
 from django.urls import reverse_lazy
+from django.views.generic import View
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework_simplejwt.tokens import RefreshToken
 from .models import User
+
+
+def get_tokens_for_user(user):
+    refresh = RefreshToken.for_user(user)
+    return {
+        'refresh': str(refresh),
+        'access': str(refresh.access_token),
+    }
 
 
 # Ro'yxatdan o'tish
@@ -27,24 +38,37 @@ def register_view(request):
                 role=role,
                 is_approved=False  # Admin tasdiqlamaguncha kirish taqiqlanadi
             )
-            messages.success(request, "Ro'yxatdan o'tdingiz! Admin tasdiqlashini kuting.")
-            return redirect('login')
+            messages.success(request, "Muvaffaqiyatli ro'yxatdan o'tdingiz!")
+            return redirect('home')
 
     return render(request, 'auth/register.html')
 
 
-# Login – faqat tasdiqlangan foydalanuvchilar kiradi
-class CustomLoginView(LoginView):
-    template_name = 'auth/login.html'
-    redirect_authenticated_user = True
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
 
-    def form_valid(self, form):
-        user = form.get_user()
-        if not user.is_approved and not user.is_superuser:
-            messages.error(self.request, "Hisobingiz hali tasdiqlanmagan. Admin bilan bog'laning.")
-            return redirect('login')
-        messages.success(self.request, f"Xush kelibsiz, {user.username}!")
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        return reverse_lazy('home')
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('username', '').strip()
+        password = request.POST.get('password', '')
+        
+        # Debug info
+        print(f"Login attempt - Username: {username}")
+        
+        # Try to authenticate
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            login(request, user)
+            print(f"User {user} logged in successfully")
+            return redirect('home')
+        else:
+            print("Authentication failed")
+            messages.error(request, "Foydalanuvchi nomi yoki parol noto'g'ri")
+    
+    # If GET request or authentication failed, show login form
+    if request.user.is_authenticated:
+        return redirect('home')
+        
+    return render(request, 'auth/login.html')

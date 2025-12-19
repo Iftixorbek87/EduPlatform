@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, Course, Lesson, Enrollment, Progress
+from .models import Category, Course, Lesson, Enrollment, LessonProgress
 from accounts.serializers import UserSerializer
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -31,7 +31,7 @@ class EnrollmentSerializer(serializers.ModelSerializer):
 
 class ProgressSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Progress
+        model = LessonProgress
         fields = '__all__'
 
 class CreateEnrollmentSerializer(serializers.ModelSerializer):

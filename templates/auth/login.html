@@ -1,16 +1,58 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="min-h-screen flex items-center justify-center bg-gray-100">
-    <div class="bg-white p-10 rounded-2xl shadow-2xl w-full max-w-md">
-        <h2 class="text-3xl font-bold text-center mb-8">Kirish</h2>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 text-xl">
-                Kirish
-            </button>
-        </form>
-        <p class="text-center mt-6">Hisobingiz yo'qmi? <a href="/register/" class="text-indigo-600 font-bold">Ro'yxatdan o'ting</a></p>
+<div style="max-width: 400px; margin: 40px auto; padding: 30px; border: 1px solid #e0e0e0; border-radius: 8px; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+    <h2 style="text-align: center; margin-bottom: 25px; color: #333; font-size: 24px;">Tizimga kirish</h2>
+    
+    {% if messages %}
+        {% for message in messages %}
+        <div style="padding: 10px; margin-bottom: 20px; border-radius: 4px; 
+                    {% if message.tags == 'error' %}
+                        background-color: #ffebee; color: #c62828; border-left: 4px solid #c62828;
+                    {% else %}
+                        background-color: #e8f5e9; color: #2e7d32; border-left: 4px solid #2e7d32;
+                    {% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    {% endif %}
+    
+    <form method="post" action="{% url 'login' %}" style="margin-bottom: 20px;">
+        {% csrf_token %}
+        
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; margin-bottom: 5px; font-weight: 500; color: #555;">
+                Foydalanuvchi nomi
+            </label>
+            <input type="text" 
+                   name="username" 
+                   required 
+                   autofocus
+                   style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; margin-bottom: 5px; font-weight: 500; color: #555;">
+                Parol
+            </label>
+            <input type="password" 
+                   name="password" 
+                   required
+                   style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+        </div>
+        
+        <button type="submit" 
+                style="width: 100%; padding: 12px; background: #4f46e5; color: white; 
+                       border: none; border-radius: 4px; font-size: 16px; cursor: pointer;
+                       transition: background 0.2s;">
+            Kirish
+        </button>
+    </form>
+    
+    <div style="text-align: center; color: #666; font-size: 14px;">
+        Hisobingiz yo'qmi? 
+        <a href="{% url 'register' %}" style="color: #4f46e5; text-decoration: none; font-weight: 500;">
+            Ro'yxatdan o'ting
+        </a>
     </div>
 </div>
 {% endblock %}
