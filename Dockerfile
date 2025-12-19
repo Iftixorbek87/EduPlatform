@@ -25,8 +25,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 COPY pyproject.toml poetry.lock* ./
 RUN pip install --upgrade pip && \
     pip install "poetry==$POETRY_VERSION" && \
-    poetry config virtualenvs.create false && \
-    poetry install --no-interaction --no-ansi
+    # poetry config virtualenvs.create false && \
+    # poetry install --no-interaction --no-ansi
 
 # Loyiha fayllarini nusxalash
 COPY . .
