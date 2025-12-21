@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.html import format_html
 from .models import Category, Course, Lesson, Enrollment, LessonProgress
 
 @admin.register(Category)
@@ -28,7 +29,15 @@ class CourseAdmin(admin.ModelAdmin):
 
 @admin.register(Lesson)
 class LessonAdmin(admin.ModelAdmin):
-    list_display = ('title', 'course', 'order')
+    list_display = ('title', 'course', 'order', 'notion_url_display')
+    list_filter = ('course',)
+    search_fields = ('title', 'description', 'notion_url')
+    
+    def notion_url_display(self, obj):
+        if obj.notion_url:
+            return format_html('<a href="{}" target="_blank">Notion havolasi</a>', obj.notion_url)
+        return "-"
+    notion_url_display.short_description = 'Notion Havolasi'
 
 @admin.register(Enrollment)
 class EnrollmentAdmin(admin.ModelAdmin):

@@ -110,6 +110,13 @@ class Lesson(models.Model):
         blank=True,
         null=True
     )
+    notion_url = models.URLField(
+        'Notion URL',
+        max_length=500,
+        blank=True,
+        null=True,
+        help_text="Notion darsliklariga havola"
+    )
     
     def clean_video_id(self, video_id):
         """Clean and validate the video ID."""
