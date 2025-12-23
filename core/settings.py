@@ -9,10 +9,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-change-me')
 
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
-DEBUG = False
-# ALLOWED_HOSTS = ['*']
-# settings.py faylida
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
+
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
@@ -27,7 +25,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'djoser',
     'corsheaders',
-    'drf_spectacular',
+    # 'drf_spectacular',
 
     'accounts',
     'courses',
@@ -68,7 +66,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    # 'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 DJOSER = {
@@ -94,5 +92,8 @@ DATABASES = {
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
