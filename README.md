@@ -6,12 +6,11 @@
 | Xususiyat                        | Holati   | Tavsif |
 |----------------------------------|--------|--------|
 | Ro‘yxatdan o‘tish / Kirish       | Done   | Email bilan, rasm yuklash imkoniyati |
-| O‘qituvchi va Talaba rollari    | Done   | `is_teacher` maydoni orqali |
+| O‘qituvchi va Talaba rollari     | Done   | `is_teacher` maydoni orqali |
 | Kurs yaratish va boshqarish      | Done   | Admin panel + saytdan (kelajakda) |
 | Kursga yozilish (Enroll)         | Done   | Bir marta bosishda |
-| Video darslar (YouTube embed)    | Done   | Responsive iframe |
+| Video darslar (kinoscope)        | Done   | Responsive iframe |
 | Dars progressini saqlash         | Done   | Qaysi darsgacha o‘qigan – eslab qoladi |
-| Kurs tugaganda PDF sertifikat    | Done   | ReportLab bilan avtomatik generatsiya |
 | Responsive dizayn                | Done   | Mobile + Desktop uchun moslashtirilgan |
 | Admin panel (Django Admin)       | Done   | To‘liq boshqaruv |
 
@@ -60,7 +59,7 @@ Admin paneldan foydalanish
 
 O‘zingni is_teacher = True qil
 Kategoriya → Kurs → Darslar → Testlar qo‘sh
-Talaba sifatida ro‘yxatdan o‘t → kursga yozil → o‘qi → sertifikat ol!
+Talaba sifatida ro‘yxatdan o‘t → kursga yozil → o‘qi → bilim ol!
 
 
 
