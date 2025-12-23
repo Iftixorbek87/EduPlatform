@@ -23,7 +23,7 @@
 - **Frontend**: Bootstrap 5, Custom CSS  
 - **PDF generatsiya**: ReportLab  
 - **Authentication**: Django Custom User (email bilan)  
-- **Deployment**: Render, PythonAnywhere, Heroku (tayyor)  
+- **Deployment**: Render (tayyor)  
 
 ---
 
